@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.vueadmin.mapper.ItemMapper">
+    <select id="getItemInfo" resultType="com.wang.vueadmin.pojo.Item">
+        select *,(select count(id) from iteminfo) as total from iteminfo where 1=1
+        <if test="name != null and name != ''">
+            and name like "%"#{name}"%"
+        </if>
+        <if test="idCard != null and idCard != ''">
+            and idCard like "%"#{idCard}"%"
+        </if>
+        <if test="phone != null and phone != ''">
+            and phone like "%"#{phone}"%"
+        </if>
+        <if test="hostNum != null and hostNum != ''">
+            and hostNum = #{hostNum}
+        </if>
+        <if test="pageNum != null and pageNum != ''">
+            limit #{pageNum},10
+        </if>
+    </select>
+<!--    新增数据后返回自增ID-->
+    <insert id="insItemInfo" useGeneratedKeys="true" keyProperty="id" parameterType="com.wang.vueadmin.pojo.Item">
+        insert into iteminfo
+        values (null,#{name},#{age},#{phone},#{idCard},#{gender},#{city},#{address},#{isOut},#{isHost},#{hostNum},#{pictPath});
+    </insert>
+    <select id="verifyAcc" resultType="com.wang.vueadmin.pojo.User">
+        select * from sys_user where username= '${username}'  and password=   '${password}' ;
+    </select>
+    <update id="updItemInfo">
+        update iteminfo
+        set name =#{name},age =#{age},phone =#{phone},idCard =#{idCard},gender =#{gender},city =#{city},address =#{address},isOut =#{isOut},isHost =#{isHost},hostNum =#{hostNum},pictPath =#{pictPath}
+        where id = #{id};
+    </update>
+    <delete id="delItemById">
+        delete from iteminfo where id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,74 @@
+#spring.application.name=vueadmin
+#management.endpoints.jmx.exposure.include=*
+#management.endpoints.web.exposure.include=*
+#management.endpoint.health.show-details=always
+## spring cloud access&secret config
+## 可以访问如下地址查看: https://usercenter.console.aliyun.com/#/manage/ak
+#alibaba.cloud.access-key=****
+#alibaba.cloud.secret-key=****
+spring:
+  application:
+    name: vueadmin
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: wp199623.
+    #数据库地址
+    url: jdbc:mysql://39.100.152.128:3306/vueadmin?serverTimezone=UTC
+#    邮箱设置
+  mail:
+    host: smtp.163.com
+    username: wp13582984654@163.com
+    password: JPLGFRGKFPVJIXGU
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          socketFactory:
+            port: 465             # 解决云服务器25端口不开放问题
+            class: javax.net.ssl.SSLSocketFactory
+
+#    redis配置
+  redis:
+    database: 0
+    host: 39.100.152.128
+    port: 6379
+    password: ali123456
+    lettuce:
+      pool:
+#        最大连接数
+        max-active: 8
+#        最大阻塞时间
+        max-wait: -1
+#        最大空闲链接
+        max-idle: 8
+#        最小空闲链接
+        min-idle: 8
+server:
+  port: 8080
+
+#  密码秘钥
+pwd:
+ secretstr: abc123
+#jwt配置
+config:
+  jwt:
+    # 加密密钥
+    secret: abcdefg1234567
+    # token有效时长
+    expire: 3600
+    # header 名称
+    header: token
+#    mybatis配置
+mybatis:
+  type-aliases-package: com.wang.vueadmin.pojo
+  mapper-locations: classpath:mapper/*Mapper.xml
+#  数据库操作sql日志
+logging:
+  level.com.wang.vueadmin.mapper: debug
